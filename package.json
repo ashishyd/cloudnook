@@ -1,0 +1,68 @@
+{
+  "name": "cloudnook",
+  "productName": "Cloudnook",
+  "version": "1.0.0",
+  "description": "Your day, under one sky. Weather, tasks, reminders and sticky notes in beautiful widgets.",
+  "main": "src/main.js",
+  "author": "Kitium AI",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron .",
+    "icons": "electron scripts/make-icons.js",
+    "dist": "node scripts/dist.js",
+    "dist:mac": "node scripts/dist-mac.js",
+    "dist:win": "electron-builder --win",
+    "dist:linux": "electron-builder --linux",
+    "test": "node --test test/*.test.cjs"
+  },
+  "devDependencies": {
+    "electron": "^33.0.0",
+    "electron-builder": "^25.1.8"
+  },
+  "build": {
+    "appId": "ai.kitium.cloudnook",
+    "productName": "Cloudnook",
+    "files": [
+      "src/**/*",
+      "assets/**/*",
+      "package.json"
+    ],
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "kitium-ai",
+        "repo": "cloudnook"
+      }
+    ],
+    "mac": {
+      "category": "public.app-category.weather",
+      "icon": "assets/icon.icns",
+      "hardenedRuntime": true,
+      "gatekeeperAssess": false,
+      "entitlements": "build/entitlements.mac.plist",
+      "entitlementsInherit": "build/entitlements.mac.plist",
+      "extendInfo": {
+        "NSLocationWhenInUseUsageDescription": "Cloudnook uses your location to show local weather and alerts.",
+        "NSLocationUsageDescription": "Cloudnook uses your location to show local weather and alerts."
+      }
+    },
+    "afterSign": "scripts/notarize.js",
+    "win": {
+      "icon": "assets/icon.png",
+      "target": [
+        "nsis"
+      ]
+    },
+    "linux": {
+      "icon": "assets/icon.png",
+      "category": "Utility",
+      "target": [
+        "AppImage",
+        "deb"
+      ]
+    }
+  },
+  "dependencies": {
+    "electron-updater": "^6.8.9"
+  }
+}
